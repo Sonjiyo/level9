@@ -5,7 +5,7 @@ public class _01상속 {
 	public static void main(String[] args) {
 		
 		System.out.println("상속이란");
-		
+		System.out.println("데이터");
 	}
 
 }
