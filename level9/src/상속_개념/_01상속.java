@@ -6,6 +6,7 @@ public class _01상속 {
 		
 		System.out.println("상속이란");
 		System.out.println("테스트메세지");
+		System.out.println("야호");
 	}
 
 }
