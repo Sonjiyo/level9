@@ -1,0 +1,61 @@
+package _06Zombie;
+import java.util.*;
+
+// 유닛은 전부 이동가능하며 pos는 현재 위치를 나타낸다 
+// 맵은 ~10까지 존재하며 한칸씩 이동 가능하다
+// 유닛들은 전부 attack 메서드를 구현한다 
+
+abstract public class Unit{
+	private int pos; // 현재위치 
+	private int hp; // 현재 hp
+	private int max; // 랜덤 공격 1부터 max 까지의 범위 
+	private String name;
+	private boolean dead; // 죽었는지 살았는지 
+	private Random rd; // 각각 하위 유닛들이 이 랜덤 클래스 사용해서 공격 범위 지정 
+	
+	public Unit(int pos, int hp, int max, String name) {
+		this.pos=pos;
+		this.hp=hp;
+		this.max=max;
+		this.name=name;
+		rd = new Random();
+	}
+	public int getHp() {
+		return hp;
+	}
+	public void setHp(int hp) {
+		this.hp += hp;
+	}
+	public void resetHp() {
+		this.hp = 0;
+	}
+	public int getPos() {
+		return pos;
+	}
+	public void setPos(int pos) {
+		this.pos = pos;
+	}
+	
+	public int getMax() {
+		return max;
+	}
+	
+	public void setMax(int max) {
+		this.max = max;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	abstract boolean attack(Unit unit);
+	
+	boolean isDead() {
+		if(this.getHp()<=0) {
+			this.resetHp();
+			this.dead = true;
+			System.out.println(this.name+"가 죽었습니다.");
+			return true;
+		}
+		return false;
+	}
+}

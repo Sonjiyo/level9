@@ -1,4 +1,4 @@
-package 상속_개념;
+package _01상속_개념;
 
 public class _07추상클래스2 {
 	public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package 상속_개념;
+package _01상속_개념;
 
 public class _05접근제어자종류 {
 	public static void main(String[] args) {

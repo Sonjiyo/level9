@@ -1,6 +1,6 @@
-package 접근제어자실습;
+package _02접근제어자실습;
 
-import 상속_개념.AccessTest;
+import _01상속_개념.AccessTest;
 
 class Child extends AccessTest{
 	Child(){

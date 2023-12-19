@@ -1,4 +1,4 @@
-package 접근제어자실습;
+package _02접근제어자실습;
 
 final class Test{
 	int num1;

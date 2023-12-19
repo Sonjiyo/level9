@@ -1,4 +1,4 @@
-package 상속_개념;
+package _01상속_개념;
 
 //추상화 : abstract <-> 구체화
 
