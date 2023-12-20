@@ -10,8 +10,7 @@ import java.util.*;
 //Boss 클래스는 생성자를 가짐(현재위치, 체력,공격력, 보호막)
 
 public class Boss extends Zombie {
-
-	Random r = new Random();
+	private int power;
 
 	private int shield;
 	public Boss(int pos, int hp, int max,String name, int shield) {
@@ -22,15 +21,22 @@ public class Boss extends Zombie {
 		return shield;
 	}
 	public void setShield(int shield) {
-		this.shield += shield;
+		this.shield = shield;
+		if(this.shield<0) this.shield= 0;
 	}
-	public void resetShield() {
-		this.shield = 0;
+
+	@Override
+	boolean attack(Unit unit) {
+		power = ((Boss)this).bossAttackUp() ? getRandom(getMax()*2) : getRandom(getMax());
+
+		unit.setHp(unit.getHp()-power);
+		System.out.println("보스가 "+power+"의 데미지로 공격 / 히어로의 현재 체력 "+unit.getHp());
+		return unit.isDead();
 	}
+	
 	boolean bossAttackUp() {
-		if(r.nextInt(4)==0) {
+		if(getRandom(4)==1) {
 			System.out.println("[ 보스 필살기 발동 2배의 공격력 ]");
-			this.setMax(this.getMax()*2);
 			return true;
 		}else {
 			System.out.println("[ 보스 일반 공격 ]");

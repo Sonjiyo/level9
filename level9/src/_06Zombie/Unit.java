@@ -24,11 +24,14 @@ abstract public class Unit{
 		return hp;
 	}
 	public void setHp(int hp) {
-		this.hp += hp;
+		this.hp = hp;
+		if(this.hp<0) {
+			this.hp =0;
+			dead = true;
+			System.out.println("=== 사망 ===");
+		}
 	}
-	public void resetHp() {
-		this.hp = 0;
-	}
+
 	public int getPos() {
 		return pos;
 	}
@@ -39,23 +42,17 @@ abstract public class Unit{
 	public int getMax() {
 		return max;
 	}
-	
-	public void setMax(int max) {
-		this.max = max;
-	}
-	
+
 	public String getName() {
 		return name;
 	}
 	abstract boolean attack(Unit unit);
 	
-	boolean isDead() {
-		if(this.getHp()<=0) {
-			this.resetHp();
-			this.dead = true;
-			System.out.println(this.name+"가 죽었습니다.");
-			return true;
-		}
-		return false;
+	
+	public boolean isDead() {
+		return dead;
+	}
+	public int getRandom(int num) {
+		return rd.nextInt(num)+1;	
 	}
 }

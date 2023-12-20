@@ -13,20 +13,16 @@ public class _gameMain {
 		// pos,hp,max,shield
 		Boss boss = new Boss(9, 300, 20,"보스", 100);
 
-		int pos = 1;
 		// hero.setPos(pos);
-		while (true) {
-
-			if (hero.isDead())
-				break;
-			System.out.println("현재 위치 = " + pos);
+		while (!hero.isDead()) {
+			System.out.println("현재 위치 = " + hero.getPos());
 
 			System.out.print("앞으로 이동하기(1),종료하기(2) ");
 
 			int move = s.nextInt();
 
 			if (move == 1) {
-				hero.setPos(++pos);
+				hero.setPos(hero.getPos()+1);
 
 				if (hero.getPos() == zom.getPos()) {
 
@@ -46,17 +42,15 @@ public class _gameMain {
 							System.out.println("입력 오류");
 							continue;
 						}
-						zom.attack(hero);
+						if(zom.attack(hero)) break;
 						if (sel == 1) {
-							hero.attack(zom);
+							if(hero.attack(zom)) break;
 						} else {
 							hero.hpRecovery();
 						}
-						if (zom.isDead())
-							break;
-						if (hero.isDead())
-							break;
-						//zom.hpRecovery();
+					}
+					if(zom.isDead()) {
+						System.out.println("좀비를 이겼습니다. 이동할 수 있습니다.");
 					}
 				}
 				if (hero.getPos() == boss.getPos()) {
@@ -76,16 +70,15 @@ public class _gameMain {
 							System.out.println("입력 오류");
 							continue;
 						}
-						boss.attack(hero);
+						if(boss.attack(hero))break;
 						if (sel == 1) {
-							hero.attack(boss);
+							if(hero.attackBoss(boss)) break;
 						} else {
 							hero.hpRecovery();
 						}
-						if (boss.isDead())
-							break;
-						if (hero.isDead())
-							break;
+					}
+					if(boss.isDead()) {
+						System.out.println("보스를 이겼습니다. 이동할 수 있습니다.");
 					}
 				}
 				if (hero.getPos() == 10) {
@@ -98,5 +91,6 @@ public class _gameMain {
 			}
 
 		}
+		if(hero.isDead()) System.out.println("히어로가 사망했습니다. 게임 종료");
 	}
 }

@@ -11,7 +11,6 @@ import java.util.Random;
 
 public class Hero extends Unit {
 	private int power;
-	private Random rd = new Random();
 	private int count; //체력포션
 	
 	public Hero(int pos, int hp, int max, int count, String name) {
@@ -19,20 +18,27 @@ public class Hero extends Unit {
 		this.count = count;
 	}
 
+	boolean attackBoss(Unit unit) {
+		power = getRandom(getMax());
+		if(((Boss) unit).getShield()>0) {
+			((Boss) unit).setShield(((Boss) unit).getShield()-power);
+			System.out.println("히어로가 "+power+"의 데미지로 공격 / 보스의 현재 방어 "
+					+((Boss) unit).getShield());
+		}else {
+			attack(unit);
+		}
+		
+		return unit.isDead();
+	}
+	
 	@Override
 	boolean attack(Unit unit) {
-		power = rd.nextInt(this.getMax())+1;
-		if(unit instanceof Boss && ((Boss) unit).getShield()>0) {
-			((Boss) unit).setShield(power*-1);
-			if(((Boss) unit).getShield()<0) ((Boss) unit).resetShield();
-			System.out.println(this.getName()+"가 "+power+"의 데미지로 공격 / "+
-					((Boss) unit).getName()+"의 현재 방어 "+((Boss) unit).getShield());
-			return false;
-		}
-		unit.setHp(power*-1);
-		System.out.println(this.getName()+"가 "+power+"의 데미지로 공격 / "+
+		power = getRandom(getMax());
+		unit.setHp(unit.getHp()-power);
+		
+		System.out.println(getName()+"가 "+power+"의 데미지로 공격 / "+
 				unit.getName()+"의 현재 체력 "+unit.getHp());
-		return false;
+		return unit.isDead();
 	}
 	
 	void hpRecovery() {
@@ -40,7 +46,7 @@ public class Hero extends Unit {
 			System.out.println("물약이 없습니다.");
 			return;
 		}
-		this.setHp(100);
+		this.setHp(this.getHp()+100);
 		count--;
 	}
 
