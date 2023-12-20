@@ -11,6 +11,40 @@ package _08제네릭클래스;
   
   */
 
+import java.util.Objects;
+
+class User{
+	String name;
+
+	public User(String name) {
+		super();
+		this.name = name;
+	}
+
+	@Override
+	public String toString() {
+		return "User [name=" + name + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(name);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		return Objects.equals(name, other.name);
+	}
+
+}
+
 class MyVector<T>{
 	Object[] arr;
 	int size;
@@ -18,7 +52,8 @@ class MyVector<T>{
 	
 	MyVector(){
 		capacity = 10;
-		arr = new Object[capacity];
+				//제네릭으로 new 할 수 없음
+		arr = new Object[capacity]; //new 해서 객체 생성할때는 반드시 타입이 특정되어야한다.
 	}
 	
 	void addIsSizeLength() {
@@ -36,13 +71,21 @@ class MyVector<T>{
 		size++;
 	}
 	
+	void remove(T value) {
+		for(int i =0; i<size; i++) {
+			if(arr[i].equals((Object)value)) {
+				remove(i);
+			}
+		}
+	}
+	
 	void remove(int idx) {
 		if(idx<0 || idx>=size) throw new ArrayIndexOutOfBoundsException();
 
 		for(int i =idx; i<size-1; i++) {
 			arr[i] = arr[i+1];
 		}
-		arr[size] = 0;
+		arr[size] = null;
 		size--;
 	}
 	
@@ -92,26 +135,41 @@ class MyVector<T>{
 public class _02벡터클래스구현2 {
 	public static void main(String[] args) {
 		
-		MyVector<Boolean> v1 = new MyVector<>();
+		MyVector<String> v1 = new MyVector<>();
 		
 		for(int i =0; i<11; i++) {
-			v1.add(i%2==0);
+			v1.add(i+"");
 		}
 		System.out.println(v1);
 		System.out.println(v1.capacity);
 		
-		v1.add(1,true);
+		v1.add(1, "k");
 		System.out.println(v1);
 		
-		v1.remove(3);
+		v1.remove("3");
 		System.out.println(v1);
 		
-		v1.set(1, false);
+		v1.set(1, "g");
 		System.out.println(v1);
 		
 		System.out.println(v1.get(1));
 		
 		v1.clear();
 		System.out.println(v1);
+		
+		MyVector<User> u = new MyVector<>();
+		
+		u.add(new User("test1"));
+		u.add(new User("test1"));
+		u.add(new User("test1"));
+		u.add(new User("test1"));
+		u.add(new User("test1"));
+		
+		System.out.println(u);
+		
+		User user1 = new User("test1");
+		User user2 = new User("test1");
+		
+		System.out.println(user1.equals(user2));
 	}
 }

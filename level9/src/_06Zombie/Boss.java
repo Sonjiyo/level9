@@ -22,7 +22,10 @@ public class Boss extends Zombie {
 	}
 	public void setShield(int shield) {
 		this.shield = shield;
-		if(this.shield<0) this.shield= 0;
+		if(this.shield<0) {
+			setHp(getHp()+this.shield);
+			this.shield= 0;
+		}
 	}
 
 	@Override
