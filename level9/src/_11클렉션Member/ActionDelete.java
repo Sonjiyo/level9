@@ -8,19 +8,9 @@ public class ActionDelete implements Action{
 		
 		System.out.println("[멤버 삭제하기]");
 		String id = Util.getValue("아이디 입력");
-		
-		int idx = dao.isVaildId(id);
-		if(idx==-1) {
-			System.out.println("존재하지 않는 아이디입니다.");
-			return;
-		}
-		
 		String pw = Util.getValue("비밀번호 입력");
-		if(!dao.pwCheck(idx,pw)) {
-			System.out.println("잘못된 비밀번호입니다.");
-			return;
-		}
-		dao.removeMember(idx);
+
+		dao.removeMember(id,pw);
 	}
 
 }

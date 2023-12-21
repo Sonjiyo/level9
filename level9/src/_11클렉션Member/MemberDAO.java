@@ -16,11 +16,16 @@ public class MemberDAO {
 	}
 	
 	public void insertMember(String id, String pw) {
+		if(isVaildId(id)!=-1) {
+			System.out.println("이미 등록된 아이디입니다.");
+			return;
+		}
+		
 		memberList.add(new Member(id,pw));
 		System.out.println("[ "+memberList.get(memberList.size()-1) + " 추가 완료 ]");
 	}
 	
-	public int isVaildId(String id) {
+	private int isVaildId(String id) {
 		if(memberList.size()==0) return -1;
 		for(int i =0; i<memberList.size(); i++) {
 			if(memberList.get(i).getId().equals(id)) {
@@ -30,16 +35,38 @@ public class MemberDAO {
 		return -1;
 	}
 	
-	public boolean pwCheck(int idx, String pw) {
+	private boolean pwCheck(int idx, String pw) {
 		return memberList.get(idx).getPw().equals(pw);
 	}
 	
-	public void removeMember(int idx) {
+	public void removeMember(String id, String pw) {
+		int idx = isVaildId(id);
+		if(idx==-1) {
+			System.out.println("아이디를 확인할 수 없습니다.");
+			return;
+		}
+		
+		if(!pwCheck(idx,pw)) {
+			System.out.println("비밀번호가 올바르지 않습니다.");
+			return;
+		}
+		
 		System.out.println("[ "+memberList.get(idx) + " 삭제 완료 ]");
 		memberList.remove(idx);
 	}
 	
-	public void modifyMemberPw(int idx,String pw) {
+	public void modifyMemberPw(String id, String pw) {
+		int idx = isVaildId(id);
+		if(idx==-1) {
+			System.out.println("아이디를 확인할 수 없습니다.");
+			return;
+		}
+		
+		if(pwCheck(idx,pw)) {
+			System.out.println("이전에 사용하던 비밀번호와 동일합니다.");
+			return;
+		}
+		
 		memberList.get(idx).setPw(pw);
 		System.out.println("[ "+memberList.get(idx) + " 수정 완료 ]");
 	}
