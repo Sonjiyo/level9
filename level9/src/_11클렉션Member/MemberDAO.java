@@ -76,10 +76,35 @@ public class MemberDAO {
 			System.out.println("    멤버가 없습니다 ");
 			return;
 		}
+		for(Member m : memberList) {
+			System.out.println(m);
+		}
+		System.out.println("--- id 순서로 정렬 ---");
 		ArrayList<Member> copy = (ArrayList<Member>) memberList.clone();
 		Collections.sort(copy);
 		for(Member m : copy) {
 			System.out.println(m);
 		}
+	}
+	
+	public String memberDataSave() {
+		String data = "";
+		if(memberList.size()==0) return data;
+		for(Member m : memberList) {
+			data += m.getId()+"/"+m.getPw()+"\n";
+		}
+		data = data.substring(0,data.length()-1);
+		return data;
+	}
+	
+	public void memberDataLoad(String data) {
+		memberList.clear();
+		if(data.isEmpty()) return;
+		String dataList[] = data.split("\n");
+		for(String d : dataList) {
+			String[] arr = d.split("/");
+			memberList.add(new Member(arr[0],arr[1]));
+		}
+		System.out.println("[불러오기 성공]");
 	}
 }

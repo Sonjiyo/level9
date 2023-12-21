@@ -19,6 +19,8 @@ public class Controller {
 		mapList.put("delete", new ActionDelete());
 		mapList.put("modify", new ActionModify());
 		mapList.put("print", new ActionPrint());
+		mapList.put("save", new ActionFileSave());
+		mapList.put("load", new ActionFileLoad());
 	}
 	public Action getAction(String key) {
 		return mapList.get(key);
