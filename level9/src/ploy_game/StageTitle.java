@@ -6,9 +6,9 @@ public class StageTitle implements Stage {
 	public boolean update() {
 		System.out.println("======== TEXT RPG ========");
 		System.out.println("[시작] 을 입력하세요");
-		String start = GameManager.scan.next();
+		String start = Util.getValue("입력");
 		if (start.equals("시작")) {
-			GameManager.nextStage = "LOBBY";
+			GameManager.setNextStage("LOBBY");
 			return false;
 		} else {
 			System.out.println("[입력 오류]");

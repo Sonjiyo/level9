@@ -7,7 +7,6 @@ public abstract class Unit {
 	private String name;
 	private String state = "노말";
 
-	
 	public int getCurhp() {
 		return curhp;
 	}
@@ -33,29 +32,25 @@ public abstract class Unit {
 		this.state = state;
 	}
 
+	public void setPower(int power) {
+		this.power = power;
+	}
 	Unit() {};
 
-	Unit(String na, int max, int pw) {
+	public Unit(String na, int max, int pw) {
 		name = na;
 		maxhp = max;
 		curhp = max;
 		power = pw;
 	};
 
-	void init(int max, int pw) {
+	public void init(int max, int pw) {
 		maxhp = max;
 		curhp = max;
 		power = pw;
 	};
 
-	void init(String na, int max, int pw) {
-		name = na;
-		maxhp = max;
-		curhp = max;
-		power = pw;
-	};
-
-	void attack(Unit target) {
+	public void attack(Unit target) {
 		target.curhp -= power;
 		System.out.println("[" + name + "] 이 " + "[" + target.name + "] 에게 " + power + "의 데미지를 입힙니다. ");
 		if (target.curhp <= 0) {
@@ -64,8 +59,10 @@ public abstract class Unit {
 		}
 	}
 
-	void printData() {
+	public void printData() {
 		System.out.print("[" + name + "]\t🖤 " + curhp + "/" + maxhp + " \t⚔️" + power);
 		System.out.println(state.equals("노말") ? "" : " "+state);
 	}
+	
+	protected abstract boolean skill(Unit target);
 }

@@ -15,4 +15,10 @@ public class Player extends Unit {
 		}
 	}
 
+	@Override
+	protected boolean skill(Unit target) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }
