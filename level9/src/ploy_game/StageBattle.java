@@ -65,12 +65,29 @@ public class StageBattle implements Stage {
 					System.out.println("[침묵 상태로 스킬 사용 불가능]");
 					continue;
 				}
-				int idxM = Util.getRandomNum(0, monList.size());
-				int idxP = Util.getRandomNum(0, playerList.size());
-				if(p.getName().equals("힐러")) {
-					check = p.skill(playerList.get(idxP));
+				if(!p.getName().equals("힐러")) {
+					while(true) {
+						int idxM = Util.getRandomNum(0, monList.size());
+						if(monList.get(idxM).getCurhp()>0) {
+							check = p.skill(monList.get(idxM));
+							break;
+						} 
+					}					
 				} else {
-					check = p.skill(monList.get(idxM));					
+					int cnt = 0;
+					while(true) {
+						int idxP = Util.getRandomNum(0, playerList.size());
+						if(playerList.get(idxP).getCurhp()!=playerList.get(idxP).getMaxhp()
+								&& playerList.get(idxP).getCurhp()>0) {
+							check = p.skill(playerList.get(idxP));
+							break;
+						}
+						cnt++;
+						if(cnt>20) {
+							System.out.println("[회복 가능한 대상이 없습니다.]");
+							break;
+						}
+					}
 				}
 				if(!check) continue;
 			}
@@ -104,7 +121,10 @@ public class StageBattle implements Stage {
 				}else if(m instanceof UnitWolf) {
 					int power = m.getPower();
 					m.setPower(power/2);
-					for(Player p : playerList) m.attack(p);
+					for(Player p : playerList) {
+						if(p.getCurhp()==0) continue;
+						m.attack(p);
+					}
 					m.setPower(power);
 				}
 				break;

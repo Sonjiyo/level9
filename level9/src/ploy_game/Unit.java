@@ -59,7 +59,7 @@ public abstract class Unit {
 
 	public void attack(Unit target) {
 		target.curhp -= power;
-		System.out.println("[" + name + "] 이 " + "[" + target.name + "] 에게 " + power + "의 데미지를 입힙니다. ");
+		System.out.println("[" + name + "] 가 " + "[" + target.name + "] 에게 " + power + "의 데미지를 입힙니다. ");
 		if (target.curhp <= 0) {
 			System.out.println("[" + target.name + "] 가 사망했습니다.");
 			target.curhp = 0;
