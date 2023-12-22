@@ -6,6 +6,7 @@ public abstract class Unit {
 	private int power;
 	private String name;
 	private String state = "노말";
+	private boolean stateEffect;
 
 	public int getCurhp() {
 		return curhp;
@@ -35,6 +36,12 @@ public abstract class Unit {
 	public void setPower(int power) {
 		this.power = power;
 	}
+	public void setStateEffect(boolean stateEffect) {
+		this.stateEffect = stateEffect;
+	}
+	public boolean isStateEffect() {
+		return stateEffect;
+	}
 	Unit() {};
 
 	public Unit(String na, int max, int pw) {
@@ -56,6 +63,7 @@ public abstract class Unit {
 		if (target.curhp <= 0) {
 			System.out.println("[" + target.name + "] 가 사망했습니다.");
 			target.curhp = 0;
+			target.setState("노말");
 		}
 	}
 

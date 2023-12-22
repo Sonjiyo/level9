@@ -10,6 +10,7 @@ public class StageBattle implements Stage {
 	private ArrayList<Unit> monList = null;
 	private int monDead = 0;
 	private int playerDead = 0;
+	private int cnt;
 
 	public void init() {
 		unitManager.monster_rand_set(4);
@@ -35,9 +36,16 @@ public class StageBattle implements Stage {
 
 	private void player_attack(int index) {
 		Player p = playerList.get(index);
-		if(unitManager.isUnitFaint(p)) return;
 		if (p.getCurhp() <= 0)
 			return;
+		if(p.isStateEffect()) p.setState("노말");
+		if(unitManager.isUnitFaint(p) || unitManager.isUnitSilence(p)) {
+			p.setStateEffect(true);
+		}
+		if(unitManager.isUnitFaint(p)) {
+			System.out.println("["+p.getName()+"] 기절 상태로 공격 불가능");
+			return;
+		}
 		System.out.println("==========[메뉴 선택]=========");
 		while(true) {
 			System.out.println("[" + p.getName() + "] [1.어택] [2.스킬]");
@@ -52,12 +60,19 @@ public class StageBattle implements Stage {
 					}
 				}
 			} else if (sel == 2) {
+				boolean check = false;
 				if(unitManager.isUnitSilence(p)) {
 					System.out.println("[침묵 상태로 스킬 사용 불가능]");
 					continue;
 				}
-				int idx = Util.getRandomNum(0, monList.size());
-				p.skill(monList.get(idx));
+				int idxM = Util.getRandomNum(0, monList.size());
+				int idxP = Util.getRandomNum(0, playerList.size());
+				if(p.getName().equals("힐러")) {
+					check = p.skill(playerList.get(idxP));
+				} else {
+					check = p.skill(monList.get(idxM));					
+				}
+				if(!check) continue;
 			}
 			break;
 		}
@@ -65,9 +80,17 @@ public class StageBattle implements Stage {
 
 	private void monster_attack(int index) {
 		Unit m = monList.get(index);
-		if(unitManager.isUnitFaint(m)) return;
 		if (m.getCurhp() <= 0)
 			return;
+		if(unitManager.isUnitFaint(m)) return;
+		if(m.isStateEffect()) m.setState("노말");
+		if(unitManager.isUnitFaint(m) || unitManager.isUnitSilence(m)) {
+			m.setStateEffect(true);
+		}
+		if(unitManager.isUnitFaint(m)) {
+			System.out.println("["+m.getName()+"] 기절 상태로 공격 불가능");
+			return;
+		}
 		while (true) {
 			int idx = Util.getRandomNum(0, playerList.size()); 
 
@@ -79,9 +102,10 @@ public class StageBattle implements Stage {
 				if(!check) {
 					m.attack(playerList.get(idx));															
 				}else if(m instanceof UnitWolf) {
-					for(Player p : playerList) {
-						m.attack(p);
-					}
+					int power = m.getPower();
+					m.setPower(power/2);
+					for(Player p : playerList) m.attack(p);
+					m.setPower(power);
 				}
 				break;
 			}
@@ -115,8 +139,8 @@ public class StageBattle implements Stage {
 		while (run) {
 			// print_character();
 			if (turn) {
-				print_character();
 				if (p_index < playerList.size()) {
+					print_character();
 					player_attack(p_index);
 
 					p_index += 1;
@@ -137,6 +161,13 @@ public class StageBattle implements Stage {
 			check_live();
 			if (monDead <= 0 || playerDead <= 0)
 				break;
+		}
+		for(Player p : playerList) {
+			p.setSkillCnt(2);
+		}
+		if(playerDead<=0) {
+			GameManager.setNextStage("");
+			return false;
 		}
 		GameManager.setNextStage("LOBBY");
 		return false;
