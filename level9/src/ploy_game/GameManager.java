@@ -6,11 +6,15 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class GameManager {
-	Random ran = new Random();
-	static Scanner scan = new Scanner(System.in);
-	static String nextStage = "";
-	String curStage = "";
-	Map<String, Stage> stageList = new HashMap<String, Stage>();
+	private Random ran = new Random();
+	private static Scanner scan = new Scanner(System.in);
+	private static String nextStage = "";
+	private String curStage = "";
+	private Map<String, Stage> stageList = new HashMap<String, Stage>();
+
+	public static void setNextStage(String nextStage) {
+		GameManager.nextStage = nextStage;
+	}
 
 	GameManager() {
 

@@ -1,14 +1,39 @@
 package ploy_game;
 
 public abstract class Unit {
-	int curhp;
-	int maxhp;
-	int power;
-	String name;
-	String state = "노말";
+	private int curhp;
+	private int maxhp;
+	private int power;
+	private String name;
+	private String state = "노말";
 
-	Unit() {
-	};
+	
+	public int getCurhp() {
+		return curhp;
+	}
+	public void setCurhp(int curhp) {
+		this.curhp = curhp;
+	}
+	public int getMaxhp() {
+		return maxhp;
+	}
+	public int getPower() {
+		return power;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	Unit() {};
 
 	Unit(String na, int max, int pw) {
 		name = na;
@@ -40,6 +65,7 @@ public abstract class Unit {
 	}
 
 	void printData() {
-		System.out.println("[" + name + "]\t🖤 " + curhp + "/" + maxhp + " \t⚔️" + power);
+		System.out.print("[" + name + "]\t🖤 " + curhp + "/" + maxhp + " \t⚔️" + power);
+		System.out.println(state.equals("노말") ? "" : " "+state);
 	}
 }

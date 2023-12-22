@@ -13,12 +13,12 @@ public class StageBattle implements Stage {
 	int playerDead = 0;
 
 	public void init() {
-		unitManager.mon_list.clear();
+		unitManager.resetPlayer_list();
 		unitManager.monster_rand_set(4);
 		playerList = null;
-		playerList = unitManager.player_list;
+		playerList = unitManager.getPlayer_list();
 		monList = null;
-		monList = unitManager.mon_list;
+		monList = unitManager.getMon_list();
 		monDead = monList.size();
 		playerDead = playerList.size();
 	}
@@ -37,16 +37,16 @@ public class StageBattle implements Stage {
 
 	void player_attack(int index) {
 		Player p = playerList.get(index);
-		if (p.curhp <= 0)
+		if (p.getCurhp() <= 0)
 			return;
 		System.out.println("==========[메뉴 선택]=========");
-		System.out.println("[" + p.name + "] [1.어택] [2.스킬]");
+		System.out.println("[" + p.getName() + "] [1.어택] [2.스킬]");
 		int sel = GameManager.scan.nextInt();
 		if (sel == 1) {
 			while (true) {
 				int idx = ran.nextInt(monList.size());
 
-				if (monList.get(idx).curhp > 0) {
+				if (monList.get(idx).getCurhp() > 0) {
 					p.attack(monList.get(idx));
 					break;
 				}
@@ -57,11 +57,11 @@ public class StageBattle implements Stage {
 
 	void monster_attack(int index) {
 		Unit m = monList.get(index);
-		if (m.curhp <= 0)
+		if (m.getCurhp() <= 0)
 			return;
 		while (true) {
 			int idx = ran.nextInt(playerList.size());
-			if (playerList.get(idx).curhp > 0) {
+			if (playerList.get(idx).getCurhp() > 0) {
 				m.attack(playerList.get(idx));
 				break;
 			}
@@ -71,14 +71,14 @@ public class StageBattle implements Stage {
 	void check_live() {
 		int num = 0;
 		for (int i = 0; i < playerList.size(); i++) {
-			if (playerList.get(i).curhp <= 0) {
+			if (playerList.get(i).getCurhp() <= 0) {
 				num += 1;
 			}
 		}
 		playerDead = playerList.size() - num;
 		num = 0;
 		for (int i = 0; i < monList.size(); i++) {
-			if (monList.get(i).curhp <= 0) {
+			if (monList.get(i).getCurhp() <= 0) {
 				num += 1;
 			}
 		}

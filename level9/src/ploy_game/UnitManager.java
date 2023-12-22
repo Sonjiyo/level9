@@ -7,11 +7,22 @@ import java.util.Vector;
 
 public class UnitManager {
 
-	ArrayList<Player> player_list = new ArrayList<>();
-	ArrayList<Unit> mon_list = new ArrayList<>();
-	String path = UnitManager.class.getPackageName()+"."; // 패키지명 + .
-	String mons[] = { "UnitWolf", "UnitBat", "UnitOrc" };
-	Random ran = new Random();
+	private ArrayList<Player> player_list = new ArrayList<>();
+	private ArrayList<Unit> mon_list = new ArrayList<>();
+	private String path = UnitManager.class.getPackageName()+"."; // 패키지명 + .
+	private String mons[] = { "UnitWolf", "UnitBat", "UnitOrc" };
+	private Random ran = new Random();
+
+	public ArrayList<Player> getPlayer_list() {
+		return player_list;
+	}
+
+	public void resetPlayer_list(){
+		player_list.clear();
+	}
+	public ArrayList<Unit> getMon_list() {
+		return mon_list;
+	}
 
 	UnitManager() {
 		player_list.add(new Player("전사", 100, 45));
@@ -36,5 +47,9 @@ public class UnitManager {
 			// System.out.println(mon_list.get(i).name);
 		}
 	}
-
+	
+	boolean isUnitFaint(Unit unit) {
+		if(unit.getState().equals("💫기절")) return true;
+		return false;
+	}
 }
