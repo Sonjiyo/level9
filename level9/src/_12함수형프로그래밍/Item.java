@@ -2,7 +2,7 @@ package _12함수형프로그래밍;
 
 import java.util.Objects;
 
-public class Item {
+public class Item implements Comparable<Item>{
 	private int itemNo;
 	private String category;
 	private String name;
@@ -57,5 +57,14 @@ public class Item {
 		Item other = (Item) obj;
 		return Objects.equals(category, other.category) && itemNo == other.itemNo && Objects.equals(name, other.name)
 				&& price == other.price;
+	}
+	@Override
+	public int compareTo(Item o) {
+		if(itemNo>o.getItemNo()) {
+			return 1;
+		} else if(itemNo<o.getItemNo()){
+			return -1;
+		}
+		return 0;
 	}
 }

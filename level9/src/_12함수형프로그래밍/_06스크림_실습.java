@@ -50,28 +50,47 @@ public class _06스크림_실습 {
 		System.out.println("카테고리가 \"고기\"인 아이템은 "+cnt+"개");
 		// 문제 5번 가격이 10000원 이상인 값들의 	ArrayList<Item> 만들기
 		System.out.println("=========5=========");
-		List<Item> priceItem = itemList.stream()
+		ArrayList<Item> priceItem = (ArrayList<Item>)itemList.stream()
 									   .filter(item->item.getPrice()>=10000)
 									   .collect(Collectors.toList());
 		priceItem.forEach(System.out::println);
 				
 		// 문제 6번 카테고리가 고기인 아이템 이름들만 가져와서 	ArrayList<String>으로 만들기
 		System.out.println("=========6=========");
-		List<String> nameItem = itemList.stream()
+		ArrayList<String> nameItem = (ArrayList<String>)itemList.stream()
 									.filter(item->item.getCategory().equals("고기"))
-									.map(item->item.getName())
+									.map(Item::getName)
 									.collect(Collectors.toList());
 		nameItem.forEach(System.out::println);
 		// 문제 7번 아이템 번호로 정렬 후 출력
 		System.out.println("=========7=========");
 		itemList.stream()
-				.sorted(Comparator.comparing(Item::getItemNo))
-				.forEach(System.out::println);
+				.sorted() //방법 1 (Item에 implements Comparable<Item> 하기)
+				.forEach(System.out::println); 
 		
 		// 문제 8번 아이템 가격 순으로 정렬 
 		System.out.println("=========8=========");
 		itemList.stream()
-		.sorted(Comparator.comparing(Item::getPrice))
+		.sorted(Comparator.comparing(Item::getPrice)) //방법 2
+//		.sorted((item1,item2) -> {                    //방법 3
+//			if(item1.getPrice() > item2.getPrice()) {
+//				return 1;
+//			} else if(item1.getPrice()<item2.getPrice()) {
+//				return -1;
+//			}
+//			return 0;
+//		})
 		.forEach(System.out::println);
+		
+		//통계하는 클래스
+		IntSummaryStatistics status = itemList.stream()
+									  .distinct()
+									  .map(Item::getPrice)
+									  .collect(Collectors.summarizingInt(Integer::intValue));
+		System.out.println(status);
+		System.out.println(status.getAverage());
+		System.out.println(status.getMax());
+		System.out.println(status.getMin());
+		System.out.println(status.getSum());
 	}
 }
