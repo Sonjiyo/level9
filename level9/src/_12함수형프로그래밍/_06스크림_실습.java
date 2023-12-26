@@ -3,7 +3,7 @@ package _12함수형프로그래밍;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class _05스크림_실습 {
+public class _06스크림_실습 {
 	public static List<Item> setData(){
 		List<Item> itemList = new ArrayList<>();
 		
@@ -16,8 +16,8 @@ public class _05스크림_실습 {
 		itemList.add(new Item(1005,"고기","소고기",15000));
 		itemList.add(new Item(1002,"음료수","사이다",1000));
 		itemList.add(new Item(1002,"음료수","사이다",1000));
-		itemList.add(new Item(1009,"과자","홈런볼",3500));
-		itemList.add(new Item(1010,"주류","맥주",12000));
+		itemList.add(new Item(1008,"과자","홈런볼",3500));
+		itemList.add(new Item(1009,"주류","맥주",12000));
 		
 		
 		return itemList;
@@ -57,8 +57,9 @@ public class _05스크림_실습 {
 				
 		// 문제 6번 카테고리가 고기인 아이템 이름들만 가져와서 	ArrayList<String>으로 만들기
 		System.out.println("=========6=========");
-		List<Item> nameItem = itemList.stream()
+		List<String> nameItem = itemList.stream()
 									.filter(item->item.getCategory().equals("고기"))
+									.map(item->item.getName())
 									.collect(Collectors.toList());
 		nameItem.forEach(System.out::println);
 		// 문제 7번 아이템 번호로 정렬 후 출력

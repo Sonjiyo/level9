@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class _06스트림_이론 {
+public class _05스트림_이론 {
 	public static void main(String[] args) {
 		
 		List<String> names = Arrays.asList("박연미","유재석","하하","정형돈","노홍철","박연미","하하");
